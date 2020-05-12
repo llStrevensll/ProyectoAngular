@@ -15,6 +15,7 @@ export class ClienteService {
 
   constructor(private http: HttpClient) { }
 
+  // Obtener clientes
   getClientes(): Observable<Cliente[]> {
     // return of(CLIENTES); // Creamos nuestro flujo Observable a partir de los objetos CLIENTES
     return this.http.get<Cliente[]>(this.urlEndPoint); // Castear a <Cliente[]>
@@ -24,11 +25,23 @@ export class ClienteService {
       );*/
   }
 
+  // Crear Cliente
   create(cliente: Cliente): Observable<Cliente> {
       return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders});
   }
 
+  // Obtener CLiente por Id
   getCliente(id): Observable<Cliente> {
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`)
+  }
+
+  // Actualizar cliente
+  update(cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders});
+  }
+
+  // Eliminar Cliente
+  delete(id: number): Observable<Cliente> {
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders});
   }
 }
